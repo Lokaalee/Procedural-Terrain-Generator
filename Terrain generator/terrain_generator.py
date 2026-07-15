@@ -48,11 +48,8 @@ class TerrainGenerator:
                     math.cos(z * 1.2) * 0.3
                 )
 
-                # Random variation
-                noise = random.uniform(-0.10, 0.15)
-
                 # Final terrain height
-                height = (large * 1.2) + medium + small + detail + noise
+                height = (large * 1.2) + medium + small + detail
 
                 row.append(Vertex(x, height, z))
 
