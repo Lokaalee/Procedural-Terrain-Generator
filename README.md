@@ -4,8 +4,8 @@ Our group selected a Procedural Terrain Generator as our Procedural Content Gene
 We chose this project because it demonstrates how complex environments can be created efficiently using computation while allowing us to explore the mathematical and programming principles behind procedural content generation. It also offers opportunities to develop a realistic and scalable terrain generation system that can be extended with additional features as the project progresses.
 
 Group A members
-SCT 221-C004-0046/2024- Nasteha Ahmed
-SCT221-C004-0581/2024- Lorene Wambui
-SCT221-C004-0561/2024- Reyhana Abdi
-SCT221-C004-0093/2024- Robert Bashir
-SCT221-C004-0263/2024- Cecilia Wambui
+Nasteha Ahmed,
+Lorene Wambui,
+Reyhana Abdi,
+Robert Bashir and
+Cecilia Wambui
