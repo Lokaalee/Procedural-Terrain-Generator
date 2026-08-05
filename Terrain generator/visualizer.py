@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import numpy as np
 import math
+import random
+import time
 
 from renderer import Renderer
-from quadtree import Rectangle # ADDED IMPORT
+from Quadtree import Rectangle # ADDED IMPORT
 
 class Visualizer:
     def display(self, terrain, quadtree): # Updated to accept the quadtree
@@ -69,8 +72,14 @@ class Visualizer:
             opt_y.append(new_z)
             opt_z.append(orig_y)
 
+        # Save the original terrain heights
+        original_opt_z = opt_z.copy()
+
+        
         # Plot the optimized mesh using trisurf (which handles 1D arrays of culled points)
         surface = ax.plot_trisurf(
+
+
             opt_x, 
             opt_y, 
             opt_z, 
@@ -83,9 +92,94 @@ class Visualizer:
 
         # Camera
         ax.view_init(elev=30, azim=45)
-        ax.set_title("QuadTree Optimized Terrain (Milestone 4)")
+        ax.set_title("QuadTree Optimized Terrain (Milestone 5)")
         ax.set_xlabel("X")
         ax.set_ylabel("Z")
         ax.set_zlabel("Height")
+
+        
+        # Create fog particles above terrain
+        fog_x = []
+        fog_y = []
+        fog_z = []
+
+        for i in range(100):
+          index = random.randint(0, len(opt_x)-1)
+
+          fog_x.append(opt_x[index])
+          fog_y.append(opt_y[index])
+
+          # place particles slightly above terrain height
+          fog_z.append(original_opt_z[index] + random.uniform(2, 5))
+
+
+
+        def animate(frame):
+           
+           start_time = time.time()
+           # Clear the previous frame
+           ax.clear()
+
+           # Create new animated heights
+           animated_z = []
+
+           
+
+           for i, height in enumerate(original_opt_z):
+             
+              wave = math.sin(frame * 0.05 + i * 0.1)
+              animated_z.append(height + wave * 0.3)
+    
+           print("Animated heights:", len(animated_z))
+           # Draw the terrain
+           print(len(opt_x), len(opt_y), len(animated_z))
+           ax.plot_trisurf(
+             opt_x,
+             opt_y,
+             animated_z,
+             cmap='terrain',
+             linewidth=0.1,
+             antialiased=True,
+             edgecolor='black'
+         )
+
+            # Draw fog particles
+           ax.scatter(
+                fog_x,
+                fog_y,
+                fog_z,
+                s=5,
+                alpha=0.5
+            )
+ 
+        # Rotate the camera
+           ax.view_init(elev=30, azim=frame)
+
+           ax.set_title("QuadTree Optimized Terrain (Milestone 5)")
+           ax.set_xlabel("X")
+           ax.set_ylabel("Z")
+           ax.set_zlabel("Height")
+
+
+
+           frame_time = time.time() - start_time
+           fps = 1 / frame_time
+
+           print("FPS:", round(fps, 2))
+
+
+
+
+           return []
+
+        
+        self.ani = FuncAnimation(
+           fig,
+           animate,
+           frames=360,
+           interval=50,
+           blit=False,
+           repeat=True
+)  
 
         plt.show()
