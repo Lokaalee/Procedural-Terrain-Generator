@@ -15,7 +15,9 @@ class Renderer:
 
         rows, cols = Z.shape
 
-        colours = np.zeros((rows, cols, 3))
+        colours = np.zeros(
+            (rows, cols, 3)
+        )
 
         dx, dz = np.gradient(Z)
 
@@ -29,10 +31,16 @@ class Renderer:
                     -dz[i, j]
                 ])
 
-                intensity = self.light.calculate_intensity(normal)
+                intensity = (
+                    self.light.calculate_intensity(
+                        normal
+                    )
+                )
 
                 base = np.array(
-                    self.material.colour(Z[i, j])
+                    self.material.colour(
+                        Z[i, j]
+                    )
                 )
 
                 colours[i, j] = np.clip(
